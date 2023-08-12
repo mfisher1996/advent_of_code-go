@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"slices"
-	"strings"
 )
 
 func main(){
@@ -17,7 +16,6 @@ func main(){
     b := 0
     for scanner.Scan(){
         line := scanner.Text()
-        strings.Trim(line, "\n ")
         var a int
         if _,err := fmt.Sscanf(line, "%d", &a); err != nil {
             list = append(list, b)
@@ -40,18 +38,27 @@ func main(){
     sum := 0
     for scanner.Scan(){
         line := scanner.Text()
-        strings.Trim(line, "\n ")
         var opponent, me rune 
         fmt.Sscanf(line, "%c %c", &opponent, &me)
         sum = sum + get_score(opponent, me)
     }
     fmt.Print("part 1: ")
     fmt.Println(sum)
-
+    //part 2
+    day_2_file, _ = os.Open("./prod_2")
+    scanner = bufio.NewScanner(day_2_file)
+    sum = 0
+    for scanner.Scan(){
+        line := scanner.Text()
+        var opponent, me rune 
+        fmt.Sscanf(line, "%c %c", &opponent, &me)
+        sum = sum + get_outcome(opponent, me)
+    }
+    fmt.Print("part 2: ")
+    fmt.Println(sum)
 }
 
 func get_score(o, m rune) int {
-    //var o, m = int(o), int(m)
     o = o - 65
     m = m - 88
     score := 0
@@ -63,7 +70,11 @@ func get_score(o, m rune) int {
     return int(m) + score + 1
 }
 
-//func get_outcome(o, m rune) int {
-    //opp := int(o)
-    //me := switch o
-//}
+func get_outcome(o, m rune) int {
+    switch m {
+    case 'X': return ((int(o - 65) + 2) % 3) + 1
+    case 'Y': return int(o - 65)  + 4
+    case 'Z': return ((int(o - 65) + 1) % 3)  + 7
+    default: return 0
+    }
+}
