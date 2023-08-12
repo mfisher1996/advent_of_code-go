@@ -4,11 +4,14 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"slices"
 	"strings"
 )
 
 func main(){
-    scanner := bufio.NewScanner(os.Stdin)
+
+    day_1_file, _ := os.Open("./prod_1")
+    scanner := bufio.NewScanner(day_1_file)
     list := []int{}
     b := 0
     for scanner.Scan(){
@@ -23,19 +26,13 @@ func main(){
         }
     }
     
+    slices.Sort(list)
+    slices.Reverse[[]int](list)
     fmt.Print("part 1: ")
-    fmt.Println(max_of_arr(list))
-    //fmt.Print("part 2: ")
-    //fmt.Println(max_of_arr(list))
-}
+    fmt.Println(list[0])
+    fmt.Print("part 2: ")
+    fmt.Println(list[0] + list[1] + list[2])
 
-func max_of_arr(a []int) int {
-    max := a[0]
-    for _, v := range a {
-        if v > max {
-            max = v
-        }
-    }
-    return max
-}
+    //day_2_file, _ := os.Open("./prod_2")
 
+}
