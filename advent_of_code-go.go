@@ -51,14 +51,19 @@ func main(){
 }
 
 func get_score(o, m rune) int {
-    var opp, me = int(o), int(m)
-    opp = opp - 65
-    me = me - 88
+    //var o, m = int(o), int(m)
+    o = o - 65
+    m = m - 88
     score := 0
-    if (opp + 1) % 3 == me {
+    if (o + 1) % 3 == m {
         score = 6
-    } else if opp == me {
+    } else if o == m {
         score = 3
     }
-    return me + score + 1
+    return int(m) + score + 1
 }
+
+//func get_outcome(o, m rune) int {
+    //opp := int(o)
+    //me := switch o
+//}
