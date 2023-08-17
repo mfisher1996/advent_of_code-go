@@ -76,6 +76,30 @@ func main(){
         }
     }
     fmt.Println("part 1:",sum)
+    day_3_file, _ = os.Open("./prod_3")
+    scanner = bufio.NewScanner(day_3_file)
+    sum = 0
+    count := 0 
+    var group []string
+    for scanner.Scan() {
+        count ++
+        group = append(group, scanner.Text())
+        if count % 3 == 0 {
+            for _, val := range group[0] {
+                if strings.ContainsRune(group[1], val) && strings.ContainsRune(group[2], val) {
+                    if val >= 'A' && val <= 'Z' {
+                        sum = sum + int(val) - 65 + 27
+                        break
+                    } else {
+                        sum = sum + int(val) - 97 + 1
+                        break
+                    }
+                }
+            }
+            group = []string{}
+        }
+    }
+    fmt.Println("part 2:",sum)
 }
 
 func get_score(o, m rune) int {
