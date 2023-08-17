@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"slices"
+	"strings"
 )
 
 func main(){
@@ -26,10 +27,8 @@ func main(){
     }
     slices.Sort(list)
     slices.Reverse[[]int](list)
-    fmt.Print("part 1: ")
-    fmt.Println(list[0])
-    fmt.Print("part 2: ")
-    fmt.Println(list[0] + list[1] + list[2])
+    fmt.Println("part 1: ",list[0])
+    fmt.Println("part 2: ",list[0] + list[1] + list[2])
 
     fmt.Println("Day 2")
     //part 1 
@@ -42,8 +41,7 @@ func main(){
         fmt.Sscanf(line, "%c %c", &opponent, &me)
         sum = sum + get_score(opponent, me)
     }
-    fmt.Print("part 1: ")
-    fmt.Println(sum)
+    fmt.Println("part 1: ",sum)
     //part 2
     day_2_file, _ = os.Open("./prod_2")
     scanner = bufio.NewScanner(day_2_file)
@@ -54,8 +52,30 @@ func main(){
         fmt.Sscanf(line, "%c %c", &opponent, &me)
         sum = sum + get_outcome(opponent, me)
     }
-    fmt.Print("part 2: ")
-    fmt.Println(sum)
+    fmt.Println("part 2: ",sum)
+
+    fmt.Println("Day 3")
+    //part 1
+    day_3_file, _ := os.Open("./prod_3")
+    scanner = bufio.NewScanner(day_3_file)
+    sum = 0
+    for scanner.Scan() {
+        line := scanner.Text()
+        half := len(line)/2
+        start, end := line[half:], line[:half]
+        for _, val := range end {
+            if strings.ContainsRune(start, val) {
+                if val >= 'A' && val <= 'Z' {
+                    sum = sum + int(val) - 65 + 27
+                    break
+                } else {
+                    sum = sum + int(val) - 97 + 1
+                    break
+                }
+            }
+        }
+    }
+    fmt.Println("part 1:",sum)
 }
 
 func get_score(o, m rune) int {
